@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Pessoas</title>
+    <style>
+      /* CSS para um visual mais moderno */
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #dde1e1ff;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .pessoa-card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        margin-bottom: 25px;
+        padding: 25px;
+        overflow: hidden; /* Garante que o conteúdo respeite as bordas arredondadas */
+      }
+
+      .pessoa-card h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #34495e;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 10px;
+      }
+
+      .pessoa-card .usuario-info {
+        font-size: 1em;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+
+      .pessoa-card .usuario-info strong {
+        color: #555;
+      }
+
+      h3 {
+        color: #34495e;
+        font-size: 1.1em;
+        font-weight: 500;
+        margin-top: 25px;
+        margin-bottom: 15px;
+      }
+
+      .endereco {
+        background-color: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 15px;
+        line-height: 1.6;
+        font-size: 0.95em;
+      }
+
+      .endereco p {
+        margin: 0;
+      }
+
+      .no-data {
+        text-align: center;
+        color: #95a5a6;
+        font-size: 1.2em;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Pessoas Cadastradas</h1>
+
+      {% for pessoa in pessoas %}
+      <div class="pessoa-card">
+        <h2>{{ pessoa.nome }}</h2>
+        <p class="usuario-info">
+          <strong>Usuário Vinculado:</strong> @{{ pessoa.usuario.username }}
+        </p>
+
+        <h3>Endereço(s) Cadastrado(s)</h3>
+
+        {% for endereco in pessoa.endereco_set.all %}
+        <div class="endereco">
+          <p>
+            <strong>Rua:</strong> {{ endereco.rua }}, {{ endereco.numero }}
+            <br />
+            <strong>Bairro:</strong> {{ endereco.bairro }} <br />
+            <strong>Cidade/Estado:</strong> {{ endereco.cidade }} / {{
+            endereco.estado }} <br />
+            <strong>CEP:</strong> {{ endereco.cep }}
+          </p>
+        </div>
+        {% empty %}
+        <p class="no-data" style="padding: 15px; font-size: 1em">
+          Nenhum endereço cadastrado para esta pessoa.
+        </p>
+        {% endfor %}
+      </div>
+      {% empty %}
+      <p class="no-data">Nenhuma pessoa cadastrada no sistema ainda.</p>
+      {% endfor %}
+    </div>
+  </body>
+</html>
