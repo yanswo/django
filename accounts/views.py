@@ -21,11 +21,11 @@ def login_view(request):
             messages.success(request, f'Bem-vindo, {user.username}!')
 
             if user.is_superuser:
+                return redirect('administrador')
+            elif user.groups.filter(name='Gerente').exists():
                 return redirect('gerencia')
             else:
                 return redirect('home')
-            # premisao_grupos = user.get_group_permissions()
-            # print(premisao_grupos)
 
         else:
             messages.error(request, 'Usuário ou senha inválidos.')
@@ -44,3 +44,6 @@ def home_view(request):
 
 def gerencia_view(request):
     return render(request, 'accounts/gerencia.html')
+
+def administrador_view(request):
+    return render(request, 'accounts/administrador.html')
