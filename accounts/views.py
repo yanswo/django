@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -47,3 +48,7 @@ def gerencia_view(request):
 
 def administrador_view(request):
     return render(request, 'accounts/administrador.html')
+
+@login_required
+def perfil_view(request):
+    return render(request, 'accounts/perfil.html')

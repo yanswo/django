@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h2>Perfil do Usuário</h2>
+    </div>
+    <div class="card-body">
+      {% if request.user.pessoa %}
+      <p><strong>Nome:</strong> {{ request.user.pessoa.nome_completo }}</p>
+      <p><strong>Email:</strong> {{ request.user.pessoa.email }}</p>
+      <p><strong>CPF:</strong> {{ request.user.pessoa.cpf }}</p>
+      <p><strong>Telefone:</strong> {{ request.user.pessoa.telefone }}</p>
+      <p>
+        <strong>Data de Nascimento:</strong> {{
+        request.user.pessoa.data_nascimento|date:"d/m/Y" }}
+      </p>
+      <p><strong>RG:</strong> {{ request.user.pessoa.rg }}</p>
+      {% if request.user.pessoa.endereco %}
+      <hr />
+      <h4>Endereço</h4>
+      <p>
+        <strong>Rua:</strong> {{ request.user.pessoa.endereco.rua }}, {{
+        request.user.pessoa.endereco.numero }}
+      </p>
+      <p><strong>Bairro:</strong> {{ request.user.pessoa.endereco.bairro }}</p>
+      <p>
+        <strong>Cidade:</strong> {{ request.user.pessoa.endereco.cidade }} - {{
+        request.user.pessoa.endereco.estado }}
+      </p>
+      <p><strong>CEP:</strong> {{ request.user.pessoa.endereco.cep }}</p>
+      {% endif %} {% else %}
+      <p>As informações do seu perfil ainda não foram preenchidas.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
